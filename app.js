@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require('express-session')
+const MongoStore = require('connect-mongo');
 const dotenv = require("dotenv")
 const pageRoute = require('./routes/pageRoute')
 const courseRoute = require("./routes/courseRoute");
@@ -26,7 +27,9 @@ app.use(session({
   secret: 'kunefe',
   resave: false,
   saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: process.env.URL })
 }));
+
 app.use('*',(req,res,next)=>{
   userIN = req.session.userID;
   next();
