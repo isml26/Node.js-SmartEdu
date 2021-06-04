@@ -4,6 +4,8 @@ const dotenv = require("dotenv")
 const pageRoute = require('./routes/pageRoute')
 const courseRoute = require("./routes/courseRoute");
 const categoryRoute = require("./routes/categoryRoute");
+const userRoute = require("./routes/userRoute");
+
 const app = express();
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({
@@ -35,7 +37,10 @@ connection.once("open", () => {
 app.use('/', pageRoute);
 app.use('/courses', courseRoute);
 app.use('/categories',categoryRoute);
-app.use('/about', pageRoute);
+app.use('/users',userRoute);
+
+
+
 
 
 app.listen(PORT, (req, res) => {
