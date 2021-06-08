@@ -26,6 +26,9 @@ exports.loginUser = async (req, res) => {
                         req.session.userID = user._id;
                         res.status(200).redirect('/users/dashboard');
                     }
+                    else{
+                        res.render("INVALID EMAIL-PASSWORD")
+                    }
                 })
             }
         })
