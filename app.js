@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
-var flash = require('connect-flash');
+const flash = require('connect-flash');
+const methodOverride = require("method-override");
 const dotenv = require("dotenv")
 const pageRoute = require('./routes/pageRoute')
 const courseRoute = require("./routes/courseRoute");
@@ -28,15 +29,20 @@ app.use(session({
   secret: 'kunefe',
   resave: false,
   saveUninitialized: true,
-  store: MongoStore.create({ mongoUrl: process.env.URL })
+  store: MongoStore.create({
+    mongoUrl: process.env.URL
+  })
 }));
 app.use(flash());
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
   next();
-})
+});
+app.use(methodOverride('_method', {
+  methods: ['POST', 'GET']
+}));
 
-app.use('*',(req,res,next)=>{
+app.use('*', (req, res, next) => {
   userIN = req.session.userID;
   next();
 })
@@ -57,8 +63,8 @@ connection.once("open", () => {
 //Routes
 app.use('/', pageRoute);
 app.use('/courses', courseRoute);
-app.use('/categories',categoryRoute);
-app.use('/users',userRoute);
+app.use('/categories', categoryRoute);
+app.use('/users', userRoute);
 
 
 
