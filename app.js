@@ -46,7 +46,7 @@ app.use('*', (req, res, next) => {
   userIN = req.session.userID;
   next();
 })
-const PORT = 3000;
+const PORT = process.env.PORT || 3000 ;
 mongoose.connect(process.env.URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
